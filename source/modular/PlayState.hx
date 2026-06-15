@@ -1,47 +1,26 @@
 package modular;
 
-import Section.SwagSection;
-import Song.SwagSong;
-import flixel.FlxBasic;
-import flixel.FlxCamera;
-import flixel.FlxG;
-import flixel.FlxGame;
-import flixel.FlxObject;
-import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.FlxSubState;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.effects.FlxTrail;
-import flixel.addons.effects.FlxTrailArea;
-import flixel.addons.effects.chainable.FlxEffectSprite;
-import flixel.addons.effects.chainable.FlxWaveEffect;
+import modular.Section;
+import modular.Song;
+import flixel.*;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.math.FlxMath;
-import flixel.math.FlxPoint;
-import flixel.math.FlxRect;
+import flixel.math.*;
 import flixel.sound.FlxSound;
 import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
+import flixel.tweens.*;
 import flixel.ui.FlxBar;
-import flixel.util.FlxCollision;
-import flixel.util.FlxColor;
-import flixel.util.FlxSort;
-import flixel.util.FlxStringUtil;
-import flixel.util.FlxTimer;
+import flixel.util.*;
 import haxe.Json;
 import lime.utils.Assets;
-import openfl.display.BlendMode;
-import openfl.display.StageQuality;
-import openfl.filters.ShaderFilter;
 
 using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	public static var instance:PlayState;
+
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
@@ -96,7 +75,7 @@ class PlayState extends MusicBeatState
 
 	public static var campaignScore:Int = 0;
 
-	var defaultCamZoom:Float = 1.05;
+	public var defaultCamZoom:Float = 1.05;
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
@@ -105,6 +84,9 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		instance = null;
+		instance = this;
+
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -121,28 +103,6 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
-
-		defaultCamZoom = 0.9;
-		curStage = 'stage';
-		var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic('assets/images/stageback.png');
-		bg.scrollFactor.set(0.9, 0.9);
-		bg.active = false;
-		add(bg);
-
-		var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic('assets/images/stagefront.png');
-		stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-		stageFront.updateHitbox();
-		stageFront.scrollFactor.set(0.9, 0.9);
-		stageFront.active = false;
-		add(stageFront);
-
-		var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic('assets/images/stagecurtains.png');
-		stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-		stageCurtains.updateHitbox();
-		stageCurtains.scrollFactor.set(1.3, 1.3);
-		stageCurtains.active = false;
-
-		add(stageCurtains);
 
 		gf = new Character(400, 130, 'gf');
 		gf.scrollFactor.set(0.95, 0.95);
@@ -436,9 +396,7 @@ class PlayState extends MusicBeatState
 				{
 					swagNote.x += FlxG.width / 2; // general offset
 				}
-				else
-				{
-				}
+				else {}
 			}
 			daBeats += 1;
 		}
@@ -1017,10 +975,10 @@ class PlayState extends MusicBeatState
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
 		add(rating);
 
-			rating.setGraphicSize(Std.int(rating.width * 0.7));
-			// rating.antialiasing = true;
-			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
-			// comboSpr.antialiasing = true;
+		rating.setGraphicSize(Std.int(rating.width * 0.7));
+		// rating.antialiasing = true;
+		comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
+		// comboSpr.antialiasing = true;
 
 		comboSpr.updateHitbox();
 		rating.updateHitbox();
@@ -1039,8 +997,8 @@ class PlayState extends MusicBeatState
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
 
-				// numScore.antialiasing = true;
-				numScore.setGraphicSize(Std.int(numScore.width * 0.5));
+			// numScore.antialiasing = true;
+			numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			numScore.updateHitbox();
 
 			numScore.acceleration.y = FlxG.random.int(200, 300);

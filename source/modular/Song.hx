@@ -1,6 +1,6 @@
 package modular;
 
-import Section.SwagSection;
+import modular.Section;
 import haxe.Json;
 import haxe.format.JsonParser;
 import lime.utils.Assets;

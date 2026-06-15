@@ -1,5 +1,6 @@
 package;
 
+import modular.mods.ModBase;
 import flixel.FlxGame;
 import openfl.display.FPS;
 import openfl.display.Sprite;
@@ -9,6 +10,9 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+
+		ModBase.loadDefaultMod();
+
 		addChild(new FlxGame(0, 0, modular.TitleState));
 
 		#if !mobile
