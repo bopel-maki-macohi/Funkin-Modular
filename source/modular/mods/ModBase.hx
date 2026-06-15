@@ -34,6 +34,7 @@ class ModBase
 		initModList();
 
 		mod = modsList.get(id);
+		mod.loaded();
 	}
 
 	public var id(default, null):String;
@@ -58,4 +59,6 @@ class ModBase
 	public function makeStage(stage:String) {}
 
 	public function destroy() {}
+
+	public function loaded() {}
 }
