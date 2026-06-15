@@ -31,25 +31,7 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		songs = CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt');
-
-		/* 
-			if (FlxG.sound.music != null)
-			{
-				if (!FlxG.sound.music.playing)
-					FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt);
-			}
-		 */
-
-		var isDebug:Bool = false;
-
-		#if debug
-		isDebug = true;
-		#end
-
-		// LOAD MUSIC
-
-		// LOAD CHARACTERS
+		songs = ModFlags.SONGS;
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuBGBlue.png');
 		add(bg);
