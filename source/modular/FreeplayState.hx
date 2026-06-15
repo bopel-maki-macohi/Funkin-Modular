@@ -1,5 +1,6 @@
 package modular;
 
+import modular.mods.ModFlags;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -136,33 +137,20 @@ class FreeplayState extends MusicBeatState
 		var accepted = controls.ACCEPT;
 
 		if (upP)
-		{
 			changeSelection(-1);
-		}
 		if (downP)
-		{
 			changeSelection(1);
-		}
 
 		if (controls.LEFT_P)
 			changeDiff(-1);
 		if (controls.RIGHT_P)
 			changeDiff(1);
 
-		if (controls.BACK)
-		{
-			// FlxG.switchState(() -> new MainMenuState());
-		}
-
 		if (accepted)
 		{
-			var poop:String = Highscore.formatSong(songs[curSelected].toLowerCase(), curDifficulty);
-
-			trace(poop);
-
-			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].toLowerCase());
+			PlayState.SONG = Song.loadFromJson(songs[curSelected].toLowerCase());
 			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
+			PlayState.curDifficulty = ModFlags.DIFFICULTYS[curDifficulty];
 			FlxG.switchState(() -> new PlayState());
 			if (FlxG.sound.music != null)
 				FlxG.sound.music.stop();
@@ -174,23 +162,13 @@ class FreeplayState extends MusicBeatState
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = 2;
-		if (curDifficulty > 2)
+			curDifficulty = ModFlags.DIFFICULTYS.length - 1;
+		if (curDifficulty > ModFlags.DIFFICULTYS.length - 1)
 			curDifficulty = 0;
 
-		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected], curDifficulty);
-		#end
 
-		switch (curDifficulty)
-		{
-			case 0:
-				diffText.text = "EASY";
-			case 1:
-				diffText.text = 'NORMAL';
-			case 2:
-				diffText.text = "HARD";
-		}
+		diffText.text = ModFlags.DIFFICULTYS[curDifficulty].toUpperCase();
 	}
 
 	function changeSelection(change:Int = 0)
@@ -204,12 +182,7 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		// selector.y = (70 * curSelected) + 30;
-
-		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected], curDifficulty);
-		// lerpScore = 0;
-		#end
 
 		FlxG.sound.playMusic('assets/songs/${songs[curSelected].toLowerCase()}/' + songs[curSelected] + "_Inst" + TitleState.soundExt, 0);
 
@@ -221,13 +194,9 @@ class FreeplayState extends MusicBeatState
 			bullShit++;
 
 			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
 
 			if (item.targetY == 0)
-			{
 				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
-			}
 		}
 	}
 }

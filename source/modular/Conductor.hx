@@ -1,5 +1,6 @@
 package modular;
 
+import modular.Section.SwagSection;
 import modular.Song;
 
 /**
@@ -32,18 +33,19 @@ class Conductor
 	{
 	}
 
-	public static function mapBPMChanges(song:SwagSong)
+	public static function mapBPMChanges(song:SongChart, difficulty:String)
 	{
 		bpmChangeMap = [];
 
-		var curBPM:Int = song.bpm;
+		var curBPM:Int = song.song.bpm;
+		var notes:SongNotes = Song.getDifficulty(song, difficulty);
 		var totalSteps:Int = 0;
 		var totalPos:Float = 0;
-		for (i in 0...song.notes.length)
+		for (i in 0...notes.length)
 		{
-			if(song.notes[i].changeBPM && song.notes[i].bpm != curBPM)
+			if(notes[i].changeBPM && notes[i].bpm != curBPM)
 			{
-				curBPM = song.notes[i].bpm;
+				curBPM = notes[i].bpm;
 				var event:BPMChangeEvent = {
 					stepTime: totalSteps,
 					songTime: totalPos,
@@ -52,7 +54,7 @@ class Conductor
 				bpmChangeMap.push(event);
 			}
 
-			var deltaSteps:Int = song.notes[i].lengthInSteps;
+			var deltaSteps:Int = notes[i].lengthInSteps;
 			totalSteps += deltaSteps;
 			totalPos += ((60 / curBPM) * 1000 / 4) * deltaSteps;
 		}
