@@ -323,7 +323,7 @@ class PlayState extends MusicBeatState
 		lastReportedPlayheadPosition = 0;
 
 		if (!paused)
-			FlxG.sound.playMusic('assets/songs/${curSong.toLowerCase()}/${curSong}_Inst' + TitleState.soundExt, 1, false);
+			FlxG.sound.playMusic('assets/songs/${curSong.toLowerCase()}/Inst' + TitleState.soundExt, 1, false);
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 	}
@@ -341,7 +341,7 @@ class PlayState extends MusicBeatState
 		curStage = songData.song.stage ?? 'mainStage';
 
 		if (SONG.song.needsVoices)
-			vocals = new FlxSound().loadEmbedded('assets/songs/${curSong.toLowerCase()}/' + curSong + "_Voices" + TitleState.soundExt);
+			vocals = new FlxSound().loadEmbedded('assets/songs/${curSong.toLowerCase()}/' + "Voices" + TitleState.soundExt);
 		else
 			vocals = new FlxSound();
 
