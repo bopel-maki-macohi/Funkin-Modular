@@ -1,5 +1,7 @@
 package modular;
 
+import modular.mods.ModBase;
+import flixel.group.FlxSpriteGroup;
 import modular.Section;
 import modular.Song;
 import flixel.*;
@@ -28,19 +30,16 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 
-	var halloweenLevel:Bool = false;
-
 	private var vocals:FlxSound;
 
-	private var dad:Character;
-	private var gf:Character;
-	private var boyfriend:Boyfriend;
+	public var dad:Character;
+	public var gf:Character;
+	public var boyfriend:Boyfriend;
 
 	private var notes:FlxTypedGroup<Note>;
 	private var unspawnNotes:Array<Note> = [];
 
 	private var strumLine:FlxSprite;
-	private var curSection:Int = 0;
 
 	private var camFollow:FlxObject;
 
@@ -81,6 +80,11 @@ class PlayState extends MusicBeatState
 	public static var daPixelZoom:Float = 6;
 
 	var inCutscene:Bool = false;
+
+	public var backSprites:FlxSpriteGroup;
+	public var aboveGFSprites:FlxSpriteGroup;
+	public var aboveDADSprites:FlxSpriteGroup;
+	public var frontSprites:FlxSpriteGroup;
 
 	override public function create()
 	{
@@ -128,10 +132,13 @@ class PlayState extends MusicBeatState
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
 
+		add(backSprites = new FlxSpriteGroup());
 		add(gf);
-
+		add(aboveGFSprites = new FlxSpriteGroup());
 		add(dad);
+		add(aboveDADSprites = new FlxSpriteGroup());
 		add(boyfriend);
+		add(frontSprites = new FlxSpriteGroup());
 
 		Conductor.songPosition = -5000;
 
@@ -143,11 +150,7 @@ class PlayState extends MusicBeatState
 
 		playerStrums = new FlxTypedGroup<FlxSprite>();
 
-		// startCountdown();
-
 		generateSong(SONG.song);
-
-		// add(strumLine);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 
@@ -204,6 +207,8 @@ class PlayState extends MusicBeatState
 		scoreTxt.cameras = [camHUD];
 
 		startingSong = true;
+
+		ModBase.mod?.makeStage(curStage);
 
 		startCountdown();
 
@@ -324,6 +329,7 @@ class PlayState extends MusicBeatState
 		Conductor.changeBPM(songData.bpm);
 
 		curSong = songData.song;
+		curStage = songData.stage ?? 'mainStage';
 
 		if (SONG.needsVoices)
 			vocals = new FlxSound().loadEmbedded('assets/songs/${SONG.song.toLowerCase()}/' + curSong + "_Voices" + TitleState.soundExt);
@@ -1040,8 +1046,6 @@ class PlayState extends MusicBeatState
 			},
 			startDelay: Conductor.crochet * 0.001
 		});
-
-		curSection += 1;
 	}
 
 	private function keyShit():Void
@@ -1410,6 +1414,15 @@ class PlayState extends MusicBeatState
 
 			if (SONG.song == 'Tutorial' && dad.curCharacter == 'gf')
 				dad.playAnim('cheer', true);
+		}
+
+		for (grp in [backSprites, aboveGFSprites, aboveDADSprites, frontSprites,])
+		{
+			for (sprite in grp)
+			{
+				if (sprite.animation.exists('dance'))
+					sprite.animation.play('dance');
+			}
 		}
 	}
 }
