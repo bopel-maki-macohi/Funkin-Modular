@@ -24,6 +24,12 @@
 			{
 				"name": "flixel-ui",
 				"version": "2.6.4"
+			},
+			{
+				"name": "hxcpp"
+			},
+			{
+				"name": "hxcpp-debug-server"
 			}
 		]
 	}

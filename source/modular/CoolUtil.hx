@@ -1,4 +1,4 @@
-package;
+package modular;
 
 import lime.utils.Assets;
 

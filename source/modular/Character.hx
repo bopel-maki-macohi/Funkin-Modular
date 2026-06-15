@@ -1,4 +1,4 @@
-package;
+package modular;
 
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;

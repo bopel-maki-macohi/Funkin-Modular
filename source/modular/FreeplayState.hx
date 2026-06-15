@@ -1,4 +1,4 @@
-package;
+package modular;
 
 import flash.text.TextField;
 import flixel.FlxG;

@@ -1,4 +1,4 @@
-package;
+package modular;
 
 import flixel.FlxG;
 import flixel.input.FlxInput;

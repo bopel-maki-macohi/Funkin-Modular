@@ -1,4 +1,4 @@
-package;
+package modular;
 
 import Controls.Control;
 import flixel.FlxG;

@@ -1,4 +1,4 @@
-package;
+package modular;
 
 import Controls;
 import flixel.FlxCamera;
