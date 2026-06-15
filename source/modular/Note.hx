@@ -65,6 +65,8 @@ class Note extends FlxSprite
 		animation.addByPrefix('redhold', 'red hold piece');
 		animation.addByPrefix('bluehold', 'blue hold piece');
 
+		antialiasing = true;
+
 		setGraphicSize(Std.int(width * 0.7));
 		updateHitbox();
 

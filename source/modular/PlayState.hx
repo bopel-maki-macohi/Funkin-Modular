@@ -464,6 +464,7 @@ class PlayState extends MusicBeatState
 
 			babyArrow.updateHitbox();
 			babyArrow.scrollFactor.set();
+			babyArrow.antialiasing = true;
 
 			if (!isStoryMode)
 			{
@@ -868,7 +869,7 @@ class PlayState extends MusicBeatState
 
 				// FlxG.switchState(() -> new StoryMenuState());
 
-					Highscore.saveWeekScore(storyWeek, campaignScore, difficultyIndex);
+				Highscore.saveWeekScore(storyWeek, campaignScore, difficultyIndex);
 			}
 			else
 			{
