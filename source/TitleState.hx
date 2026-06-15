@@ -28,7 +28,7 @@ using StringTools;
 class TitleState extends MusicBeatState
 {
 	static var initialized:Bool = false;
-	static public var soundExt:String = ".mp3";
+	static public var soundExt:String = ".ogg";
 
 	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
@@ -42,10 +42,6 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if (!web)
-		TitleState.soundExt = '.ogg';
-		#end
-
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());

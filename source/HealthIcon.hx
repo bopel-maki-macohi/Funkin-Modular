@@ -9,7 +9,7 @@ class HealthIcon extends FlxSprite
 		super();
 		loadGraphic('assets/images/iconGrid.png', true, 150, 150);
 
-		antialiasing = true;
+		// antialiasing = true;
 		animation.add('bf', [0, 1], 0, false, isPlayer);
 		animation.add('bf-car', [0, 1], 0, false, isPlayer);
 		animation.add('bf-christmas', [0, 1], 0, false, isPlayer);
